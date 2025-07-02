@@ -1,0 +1,16 @@
+W
+---
+Windows Shells:
+[1] 
+
+---
+L
+---
+Mac/Linux Shells:
+[1] 
+
+---
+P
+---
+Python Shells:
+[1]
