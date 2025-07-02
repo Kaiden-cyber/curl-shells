@@ -6,11 +6,31 @@ Windows Shells:
 ---
 L
 ---
-Mac/Linux Shells:
+Linux Shells:
 [1] 
 
+---
+M
+---
+Mac Shells:
 ---
 P
 ---
 Python Shells:
 [1]
+
+---
+H
+---
+cURL Shells Usage:
+  General Command:
+    curl curl-shells.com -A "<option>"
+  
+  Note: replace <option> with the operating system you want to find a shell for
+
+  Options:
+    (W)indows
+    (L)inux
+    (M)ac
+    (P)ython
+    (H)elp
