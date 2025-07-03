@@ -42,4 +42,3 @@ Thanks for using **curl-shells**!
 
 
 Thank you to [revshells.com](https://revshells.com) and [pentestmonkey.net](https://pentestmonkey.net) for the reverse shells in this project!
-```
