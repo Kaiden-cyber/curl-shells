@@ -82,9 +82,10 @@ H
 ---
 cURL Shells Usage:
   General Command:
-    curl curl-shells.com -A "<option>"
+    curl curl-shells.com -A "<option>" [-H "IP: <IP>"]
   
-  Note: replace <option> with the operating system you want to find a shell for
+  Note: replace <option> with the operating system you want to find a shell for and replace <IP> with your ip
+  
 
   Options:
     (W)indows
